@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>My Blog</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <button class="toggle-button" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+
+    <div class="navbar">
+        <h1>My Blog</h1>
+        <a href="/compose">➕ Compose</a>
+    </div>
+
+    <% if (posts.length===0) { %>
+        <p>No posts yet. Be the first to <a href="/compose">write one</a>!</p>
+        <% } %>
+
+            <% posts.forEach(function(post) { %>
+                <div class="post">
+                    <h2><a href="/posts/<%= post.title %>">
+                            <%= post.title %>
+                        </a></h2>
+                    <p>
+                        <%= post.content.length> 200 ? post.content.substring(0, 200) + '...' : post.content %>
+                    </p>
+
+                    <form action="/like" method="POST" style="display: inline;">
+                        <input type="hidden" name="title" value="<%= post.title %>">
+                        <button type="submit">❤️ Like (<%= likes[post.title] || 0 %>)</button>
+                    </form>
+
+
+                    <form action="/delete" method="POST" style="margin-top: 10px;">
+                        <input type="hidden" name="title" value="<%= post.title %>">
+                        <button type="submit">🗑 Delete</button>
+                    </form>
+                </div>
+                <% }); %>
+</body>
+
+<script>
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
+    }
+
+    // Persist mode across reloads
+    window.onload = function () {
+        if (localStorage.getItem("theme") === "dark") {
+            document.body.classList.add("dark-mode");
+        }
+    };
+</script>
+
+</html>

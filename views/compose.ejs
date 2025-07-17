@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Compose New Post</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <button class="toggle-button" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+
+  <div class="navbar">
+    <h1>Compose</h1>
+    <a href="/">⬅ Back to Blog</a>
+  </div>
+
+  <form action="/compose" method="POST">
+    <input type="text" name="postTitle" placeholder="Title" required>
+    <textarea name="postBody" rows="10" placeholder="Write your post..." required></textarea>
+    <button type="submit">📢 Publish</button>
+  </form>
+</body>
+
+<script>
+  function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
+  }
+
+  // Persist mode across reloads
+  window.onload = function() {
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.classList.add("dark-mode");
+    }
+  };
+</script>
+
+</html>

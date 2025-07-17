@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <button class="toggle-button" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+
+  <div class="navbar">
+    <h1><%= title %></h1>
+    <a href="/">⬅ Back to Blog</a>
+  </div>
+
+  <div class="post">
+    <p><%= content %></p>
+  </div>
+</body>
+
+<script>
+  function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
+  }
+
+  // Persist mode across reloads
+  window.onload = function() {
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.classList.add("dark-mode");
+    }
+  };
+</script>
+
+</html>
